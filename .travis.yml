@@ -1,0 +1,12 @@
+# connect travis and docker
+sudo: required
+services:
+  - docker
+
+# build image
+before_install:
+  - docker build -t faustaleonardo/docker-react -f Dockerfile.dev .
+
+# create and run our container + test our web app
+script:
+  - docker run -e CI=true faustaleonardo/docker-react npm run test
