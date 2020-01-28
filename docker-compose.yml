@@ -1,0 +1,21 @@
+version: "3"
+services:
+  web:
+    # specify which dockerfile we want to use
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    # reference everything but not the /app/node_modules as we do not have node_modules in our local machine directory
+    volumes:
+      - /app/node_modules
+      - .:/app
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
